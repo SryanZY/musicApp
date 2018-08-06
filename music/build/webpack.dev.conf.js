@@ -48,8 +48,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             poll: config.dev.poll
         },
         // 远程数据设置了host的请求方式
-        before (apiRoutes) {
-            apiRoutes.get('/api/getDiscList', function (req, res) {
+        before (api) {
+            api.get('/api/getDiscList', function (req, res) {
                 const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
                 axios.get(url, {
                     headers: {
