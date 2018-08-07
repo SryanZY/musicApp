@@ -1,29 +1,36 @@
 <template>
     <div class="recommend">
-        <div class="recommend-content">
-            <div class="slider-wrapper">
-                <swiper :swiperList="recommends"></swiper>
+        <Scroll class="recommend-content" :data="discList">
+            <div>
+                <div class="slider-wrapper">
+                    <swiper :swiperList="recommends"></swiper>
+                </div>
+                <div class="recommend-list">
+                    <h1 class="list-title">热门歌单推荐</h1>
+                    <ul>
+                        <li v-for="(item, index) in discList" class="item" :key="index">
+                            <div class="icon">
+                                <img v-lazy="item.imgurl" class="needsclick" width="60" height="60" alt="歌单">
+                            </div>
+                            <div class="text">
+                                <h2 class="name" v-html="item.creator.name"></h2>
+                                <p class="desc" v-html="item.dissname"></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="recommend-list">
-                <h1 class="list-title">热门歌单推荐</h1>
-                <ul>
-                    <li v-for="(item, index) in discList" class="item" :key="index">
-                        <div class="icon">
-                            <img :src="item.imgurl" width="60" height="60" alt="歌单">
-                        </div>
-                        <div class="text">
-                            <h2 class="name" v-html="item.creator.name"></h2>
-                            <p class="desc" v-html="item.dissname"></p>
-                        </div>
-                    </li>
-                </ul>
+            <div class="loading-container" v-show="!discList.length">
+                <loading></loading>
             </div>
-        </div>
+        </Scroll>
     </div>
 </template>
 
 <script>
+import Scroll from 'base/scroll/scroll'
 import Swiper from 'base/swiper/swiper'
+import Loading from 'base/loading/loading'
 import { getRecommend, getDiscList } from 'api/recommend'
 import { ERR_OK } from 'api/config'
 export default {
@@ -55,7 +62,9 @@ export default {
         }
     },
     components: {
-        Swiper
+        Swiper,
+        Scroll,
+        Loading
     }
 
 }
@@ -102,4 +111,9 @@ export default {
                             color: $color-text
                         .desc
                             color: $color-text-d
+        .loading-container
+            position: absolute
+            top: 50%
+            width: 100%
+            transform: translateY(-50%)
 </style>
