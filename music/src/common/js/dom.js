@@ -12,3 +12,13 @@ export function addClass (el, className) {
     newClass.push(className)
     el.className = newClass.join(' ')
 }
+
+export function getData (el, key, val) {
+    const prefix = 'data-'
+    key = prefix + key
+    if (val) {
+        return el.setAttribute(key, val)
+    } else {
+        return el.getAttribute(key)
+    }
+}
