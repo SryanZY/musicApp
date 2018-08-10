@@ -18,6 +18,9 @@
             <div class="song-list-wrapper">
                 <song-list :songs="songs"></song-list>
             </div>
+            <div class="loading-container" v-show="!songs.length">
+                <loading></loading>
+            </div>
         </Scroll>
     </div>
 </template>
@@ -25,6 +28,7 @@
 <script>
 import SongList from 'base/song-list/song-list'
 import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 import { prefixStyle } from 'common/js/dom'
 
 const RESERVER_HEIGHT = 40
@@ -60,7 +64,8 @@ export default {
     },
     components: {
         SongList,
-        Scroll
+        Scroll,
+        Loading
     },
     methods: {
         back () {
