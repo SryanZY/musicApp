@@ -16,7 +16,7 @@
         <div class="bg-layer" ref="layer"></div>
         <Scroll @scroll="scroll" :data="songs" :probe-type="probeType" :listen-scroll="listenScroll" class="list" ref="list">
             <div class="song-list-wrapper">
-                <song-list :songs="songs"></song-list>
+                <song-list :songs="songs" @select="selectItem"></song-list>
             </div>
             <div class="loading-container" v-show="!songs.length">
                 <loading></loading>
@@ -30,6 +30,7 @@ import SongList from 'base/song-list/song-list'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import { prefixStyle } from 'common/js/dom'
+import { mapActions } from 'vuex'
 
 const RESERVER_HEIGHT = 40
 const transform = prefixStyle('transform')
@@ -73,7 +74,16 @@ export default {
         },
         scroll (pos) {
             this.scrollY = pos.y
-        }
+        },
+        selectItem (item, index) {
+            this.selectPlay({
+                list: this.songs,
+                index: index
+            })
+        },
+        ...mapActions([
+            'selectPlay'
+        ])
     },
     watch: {
         scrollY (newVal) {
